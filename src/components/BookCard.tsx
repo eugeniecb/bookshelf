@@ -30,14 +30,14 @@ export function BookCard({
 
   return (
     <div
-      className={`group relative rounded-xl bg-card border border-card-border shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 ${
+      className={`group relative flex flex-col rounded-xl bg-card border border-card-border shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 h-full ${
         isLarge ? "p-5" : "p-3"
       }`}
     >
-      <Link href={`/book/${workKey}`} className="block">
+      <Link href={`/book/${workKey}`} className="block flex-1 flex flex-col">
         <div
-          className={`relative mx-auto overflow-hidden rounded-lg bg-amber-50 shadow-inner ${
-            isLarge ? "h-72 w-48" : "h-56 w-full aspect-[2/3]"
+          className={`relative mx-auto overflow-hidden rounded-lg bg-amber-50 shadow-inner shrink-0 ${
+            isLarge ? "h-72 w-48" : "h-56 w-full"
           }`}
         >
           {coverUrl ? (
@@ -68,7 +68,7 @@ export function BookCard({
             </div>
           )}
         </div>
-        <div className={`mt-3 ${isLarge ? "text-center" : ""}`}>
+        <div className={`mt-3 flex-1 ${isLarge ? "text-center" : ""}`}>
           <h3
             className={`font-semibold leading-tight line-clamp-2 group-hover:text-accent transition-colors ${
               isLarge ? "text-lg" : "text-sm"
@@ -93,7 +93,7 @@ export function BookCard({
         </div>
       </Link>
       {(children || (favoriteCount !== undefined && favoriteCount > 0)) && (
-        <div className="mt-2 flex items-center justify-between">
+        <div className="mt-2 flex items-center justify-between shrink-0">
           {favoriteCount !== undefined && favoriteCount > 0 && (
             <span className="text-xs text-muted">
               {favoriteCount} {favoriteCount === 1 ? "favorite" : "favorites"}

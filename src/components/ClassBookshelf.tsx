@@ -186,7 +186,7 @@ export function ClassBookshelf({ favorites }: Props) {
       {view === "unified" ? (
         <BookGrid>
           {unifiedBooks.map((book) => (
-            <div key={book.work_key} className="flex flex-col">
+            <div key={book.work_key} className="flex flex-col h-full">
               <BookCard
                 workKey={book.work_key}
                 title={book.title}
