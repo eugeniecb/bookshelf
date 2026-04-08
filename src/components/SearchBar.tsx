@@ -6,7 +6,7 @@ import { useState } from "react";
 type SearchBarProps = {
   defaultValue?: string;
   placeholder?: string;
-  navigateTo?: string; // if set, navigates to this path with ?q= param
+  navigateTo?: string;
 };
 
 export function SearchBar({
@@ -16,7 +16,9 @@ export function SearchBar({
 }: SearchBarProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [query, setQuery] = useState(defaultValue || searchParams.get("q") || "");
+  const [query, setQuery] = useState(
+    defaultValue || searchParams.get("q") || ""
+  );
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -26,18 +28,18 @@ export function SearchBar({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-xl mx-auto">
+    <form onSubmit={handleSubmit} className="w-full max-w-lg mx-auto">
       <div className="relative">
         <input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder={placeholder}
-          className="w-full rounded-full border border-card-border bg-card px-5 py-3 pr-12 text-foreground placeholder:text-muted shadow-sm focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20"
+          className="w-full rounded-full border border-card-border bg-card px-6 py-3.5 pr-14 font-body text-foreground placeholder:text-muted/50 shadow-[0_2px_12px_var(--warm-shadow)] focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/15 transition-all duration-200"
         />
         <button
           type="submit"
-          className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-accent p-2 text-white hover:bg-accent-hover transition-colors"
+          className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-accent p-2.5 text-white hover:bg-accent-hover transition-colors duration-200 shadow-sm"
           aria-label="Search"
         >
           <svg

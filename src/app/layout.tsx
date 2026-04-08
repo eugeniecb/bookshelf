@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Cormorant, Lora } from "next/font/google";
 import {
   ClerkProvider,
   SignInButton,
@@ -10,19 +10,21 @@ import {
 import { SyncUser } from "@/components/SyncUser";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const cormorant = Cormorant({
+  variable: "--font-cormorant",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const lora = Lora({
+  variable: "--font-lora",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
   title: "Bookshelf",
-  description: "Track and manage your book collection",
+  description: "A cozy class bookshelf — discover what everyone is reading",
 };
 
 export default function RootLayout({
@@ -33,53 +35,61 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${cormorant.variable} ${lora.variable} h-full`}
     >
       <body className="min-h-full flex flex-col">
         <ClerkProvider>
-          <header className="sticky top-0 z-50 flex items-center justify-between px-6 py-3 border-b border-card-border bg-card/95 backdrop-blur-sm">
-            <div className="flex items-center gap-6">
-              <a
-                href="/"
-                className="text-xl font-bold tracking-tight hover:text-accent transition-colors"
-              >
-                Bookshelf
-              </a>
-              <nav className="flex items-center gap-4 text-sm font-medium">
+          <header className="sticky top-0 z-50 border-b border-card-border bg-card/90 backdrop-blur-md">
+            <div className="mx-auto max-w-6xl flex items-center justify-between px-6 py-4">
+              <div className="flex items-center gap-8">
                 <a
                   href="/"
-                  className="text-muted hover:text-foreground transition-colors"
+                  className="font-display text-2xl font-bold tracking-wide text-foreground hover:text-accent transition-colors"
                 >
-                  Home
+                  Bookshelf
                 </a>
-                <a
-                  href="/search"
-                  className="text-muted hover:text-foreground transition-colors"
-                >
-                  Search
-                </a>
-                <Show when="signed-in">
+                <nav className="flex items-center gap-6 text-sm font-body font-medium">
                   <a
-                    href="/my-books"
+                    href="/"
                     className="text-muted hover:text-foreground transition-colors"
                   >
-                    My Books
+                    Home
                   </a>
+                  <a
+                    href="/search"
+                    className="text-muted hover:text-foreground transition-colors"
+                  >
+                    Search
+                  </a>
+                  <Show when="signed-in">
+                    <a
+                      href="/my-books"
+                      className="text-muted hover:text-foreground transition-colors"
+                    >
+                      My Books
+                    </a>
+                  </Show>
+                </nav>
+              </div>
+              <div className="flex items-center gap-3">
+                <Show when="signed-out">
+                  <SignInButton />
+                  <SignUpButton />
                 </Show>
-              </nav>
-            </div>
-            <div className="flex items-center gap-3">
-              <Show when="signed-out">
-                <SignInButton />
-                <SignUpButton />
-              </Show>
-              <Show when="signed-in">
-                <UserButton />
-              </Show>
+                <Show when="signed-in">
+                  <UserButton />
+                </Show>
+              </div>
             </div>
           </header>
           <SyncUser />
           <main className="flex-1">{children}</main>
+          <footer className="border-t border-card-border py-6 text-center text-xs text-muted">
+            <span className="font-display text-sm tracking-wide">
+              Bookshelf
+            </span>{" "}
+            &middot; A place for readers
+          </footer>
         </ClerkProvider>
       </body>
     </html>

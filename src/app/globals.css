@@ -1,16 +1,22 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fdf6ee;
-  --foreground: #3d2c1e;
-  --card: #fffaf3;
-  --card-border: #e8ddd0;
-  --accent: #d97706;
-  --accent-hover: #b45309;
-  --muted: #8b7355;
-  --gold: #d97706;
+  --background: #f6f0e4;
+  --foreground: #2a1f14;
+  --card: #fffbf4;
+  --card-border: #e0d3c1;
+  --card-hover: #fff8ed;
+  --accent: #8b3a4a;
+  --accent-hover: #6e2d3b;
+  --accent-light: #f2e0e4;
+  --muted: #8a7560;
+  --surface: #eee5d5;
+  --gold: #b8943e;
   --silver: #9ca3af;
-  --bronze: #b45309;
+  --bronze: #a0714f;
+  --highlight: #f5e6c8;
+  --warm-shadow: rgba(42, 31, 20, 0.08);
+  --warm-shadow-lg: rgba(42, 31, 20, 0.14);
 }
 
 @theme inline {
@@ -18,18 +24,90 @@
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-border: var(--card-border);
+  --color-card-hover: var(--card-hover);
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
+  --color-accent-light: var(--accent-light);
   --color-muted: var(--muted);
+  --color-surface: var(--surface);
   --color-gold: var(--gold);
   --color-silver: var(--silver);
   --color-bronze: var(--bronze);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-highlight: var(--highlight);
+  --font-display: var(--font-cormorant);
+  --font-body: var(--font-lora);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  font-family: var(--font-body), Georgia, serif;
+  position: relative;
+}
+
+/* Subtle paper texture overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.3;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E");
+}
+
+body > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Elegant scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--surface);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--card-border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted);
+}
+
+/* Stagger animations for grid children */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s ease-out both;
+}
+
+/* Warm divider */
+.divider-ornament {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--card-border);
+}
+.divider-ornament::before,
+.divider-ornament::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--card-border),
+    transparent
+  );
 }

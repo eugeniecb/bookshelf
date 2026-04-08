@@ -16,7 +16,7 @@ export function RemoveButton({ workKey }: { workKey: string }) {
     <button
       onClick={handleRemove}
       disabled={isPending}
-      className={`inline-flex items-center gap-1.5 rounded-full border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-medium text-red-700 transition-colors hover:bg-red-100 hover:border-red-300 ${
+      className={`inline-flex items-center gap-1.5 rounded-full border border-card-border bg-card px-3 py-1.5 text-xs font-body font-medium text-muted transition-all duration-200 hover:border-accent hover:text-accent hover:bg-accent-light ${
         isPending ? "opacity-50 cursor-not-allowed" : ""
       }`}
     >
@@ -24,7 +24,7 @@ export function RemoveButton({ workKey }: { workKey: string }) {
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 16 16"
         fill="currentColor"
-        className="h-3.5 w-3.5"
+        className="h-3 w-3"
       >
         <path
           fillRule="evenodd"

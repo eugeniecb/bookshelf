@@ -24,35 +24,39 @@ export default async function MyBooksPage() {
   const items = favorites || [];
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10">
-      <div className="mb-8 flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-extrabold tracking-tight">My Books</h1>
-          <p className="mt-1 text-muted">
-            {items.length === 0
-              ? "You haven't saved any books yet."
-              : `${items.length} ${items.length === 1 ? "book" : "books"} saved`}
-          </p>
-        </div>
+    <div className="mx-auto max-w-6xl px-4 py-12">
+      <div className="mb-10">
+        <h1 className="font-display text-4xl font-bold tracking-tight">
+          My Books
+        </h1>
+        <p className="mt-2 text-muted font-body text-sm">
+          {items.length === 0
+            ? "You haven't saved any books yet."
+            : `${items.length} ${items.length === 1 ? "book" : "books"} on your shelf`}
+        </p>
       </div>
 
       {items.length === 0 ? (
         <div className="text-center py-20">
-          <div className="text-5xl mb-4">📖</div>
-          <p className="text-xl text-muted font-medium">Nothing here yet!</p>
-          <p className="text-muted mt-2 mb-6">
+          <div className="font-display text-5xl text-card-border mb-4">
+            &#9758;
+          </div>
+          <p className="font-display text-xl text-muted font-semibold">
+            Nothing here yet
+          </p>
+          <p className="text-muted mt-2 font-body text-sm mb-8">
             Find books you love and add them to your shelf.
           </p>
           <Link
             href="/search"
-            className="inline-block rounded-full bg-accent px-6 py-2.5 text-sm font-medium text-white hover:bg-accent-hover transition-colors"
+            className="inline-block rounded-full bg-accent px-6 py-2.5 text-sm font-body font-semibold text-white hover:bg-accent-hover transition-colors duration-200 shadow-sm"
           >
-            Search for books
+            Browse books
           </Link>
         </div>
       ) : (
         <BookGrid>
-          {items.map((fav) => {
+          {items.map((fav, i) => {
             const book = fav.books as unknown as {
               title: string;
               author_name: string;
@@ -60,16 +64,21 @@ export default async function MyBooksPage() {
               first_publish_year: number | null;
             };
             return (
-              <BookCard
+              <div
                 key={fav.work_key}
-                workKey={fav.work_key}
-                title={book.title}
-                authorName={book.author_name}
-                coverId={book.cover_id}
-                firstPublishYear={book.first_publish_year}
+                className="animate-fade-in-up"
+                style={{ animationDelay: `${i * 60}ms` }}
               >
-                <RemoveButton workKey={fav.work_key} />
-              </BookCard>
+                <BookCard
+                  workKey={fav.work_key}
+                  title={book.title}
+                  authorName={book.author_name}
+                  coverId={book.cover_id}
+                  firstPublishYear={book.first_publish_year}
+                >
+                  <RemoveButton workKey={fav.work_key} />
+                </BookCard>
+              </div>
             );
           })}
         </BookGrid>
