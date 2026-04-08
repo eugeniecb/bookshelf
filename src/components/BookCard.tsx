@@ -45,7 +45,7 @@ export function BookCard({
               src={coverUrl}
               alt={title}
               fill
-              className="object-cover group-hover:scale-105 transition-transform duration-200"
+              className="object-contain group-hover:scale-105 transition-transform duration-200"
               sizes={isLarge ? "192px" : "(max-width: 640px) 45vw, (max-width: 768px) 30vw, 20vw"}
             />
           ) : (
