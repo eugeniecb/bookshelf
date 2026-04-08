@@ -101,28 +101,19 @@ export default async function BookDetailPage({
 
           {/* Favorite button */}
           <div className="mt-4">
-            {userId ? (
-              <button className="inline-flex items-center gap-2 rounded-full border border-card-border bg-card px-5 py-2.5 font-medium transition-colors hover:border-accent">
-                <FavoriteButton
-                  workKey={key}
-                  title={work.title}
-                  authorName={authorName}
-                  coverId={coverId ?? null}
-                  firstPublishYear={
-                    work.first_publish_date
-                      ? parseInt(work.first_publish_date)
-                      : null
-                  }
-                  isFavorited={isFavorited}
-                  isSignedIn={true}
-                />
-                <span className="text-sm">
-                  {isFavorited ? "Remove from Favorites" : "Add to Favorites"}
-                </span>
-              </button>
-            ) : (
-              <p className="text-sm text-muted">Sign in to add to favorites</p>
-            )}
+            <FavoriteButton
+              workKey={key}
+              title={work.title}
+              authorName={authorName}
+              coverId={coverId ?? null}
+              firstPublishYear={
+                work.first_publish_date
+                  ? parseInt(work.first_publish_date)
+                  : null
+              }
+              isFavorited={isFavorited}
+              isSignedIn={!!userId}
+            />
           </div>
 
           {/* Description */}

@@ -68,3 +68,45 @@ export async function getUserFavorites(): Promise<string[]> {
 
   return data?.map((f) => f.work_key) || [];
 }
+
+export async function syncPendingFavorites(
+  books: {
+    work_key: string;
+    title: string;
+    author_name: string;
+    cover_id: number | null;
+    first_publish_year: number | null;
+  }[]
+) {
+  const user = await currentUser();
+  if (!user || books.length === 0) return;
+
+  // Upsert all books
+  await supabase
+    .from("books")
+    .upsert(
+      books.map((b) => ({
+        work_key: b.work_key,
+        title: b.title,
+        author_name: b.author_name,
+        cover_id: b.cover_id,
+        first_publish_year: b.first_publish_year,
+      })),
+      { onConflict: "work_key" }
+    );
+
+  // Insert favorites, ignoring duplicates
+  for (const book of books) {
+    await supabase
+      .from("favorites")
+      .insert({ user_id: user.id, work_key: book.work_key })
+      .then(({ error }) => {
+        if (error && error.code !== "23505") {
+          console.error("Failed to sync favorite:", error.message);
+        }
+      });
+  }
+
+  revalidatePath("/");
+  revalidatePath("/my-books");
+}
